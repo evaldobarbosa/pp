@@ -13,8 +13,8 @@ $ bin/phpunit -c tests/phpunit.xml --group=Info
 
 Example:
 
-<?
 <pre>
+<?
 /**
 * Getting information from ID 111970051
 */
