@@ -6,3 +6,6 @@ You will get all needed information about a product in brazilian e-commerce site
 Simple to use, PP is the way to collect data about a product in brazilian e-commerce including price, description and picture.
 
 See the code of tests.
+
+To run the test:
+$ bin/phpunit -c tests/phpunit.xml --group=Info
