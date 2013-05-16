@@ -1,0 +1,14 @@
+{
+    "require-dev": {
+        "phpunit/phpunit": "@stable"
+    },
+    "require": {
+        "php": ">=5.3.3",
+    },
+    "config": { "bin-dir": "bin" },
+    "autoload": {
+      "psr-0": {
+    		"": "src"
+    	}
+    }
+}
