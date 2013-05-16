@@ -14,6 +14,7 @@ $ bin/phpunit -c tests/phpunit.xml --group=Info
 Example:
 
 <?
+<pre>
 /**
 * Getting information from ID 111970051
 */
@@ -28,3 +29,4 @@ $p = new SubmarinoProductInfo( $productid );
 echo $p->productId, "\n", $p->productName, "\n";
 
 print_r( $p->productTable );
+</pre>
