@@ -1,0 +1,18 @@
+<phpunit
+        backupGlobals               = "false"
+        backupStaticAttributes      = "false"
+        colors                      = "true"
+        convertErrorsToExceptions   = "true"
+        convertNoticesToExceptions  = "true"
+        convertWarningsToExceptions = "true"
+        processIsolation            = "false"
+        stopOnFailure               = "false"
+        syntaxCheck                 = "false"
+        bootstrap                   = "bootstrap.php" >
+
+    <testsuites>
+        <testsuite name="Front">
+            <directory suffix=".php">src/</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
