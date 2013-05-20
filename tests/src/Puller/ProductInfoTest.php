@@ -23,6 +23,7 @@
 use Puller\Target\SubmarinoProductInfo;
 use Puller\Target\AmericanasProductInfo;
 use Puller\Target\SaraivaProductInfo;
+use Puller\Target\NetShoesProductInfo;
 /**
  * @group Info
  * @author evaldo
@@ -74,16 +75,16 @@ class ProductInfoTest extends PHPUnit_Framework_TestCase {
 	 */
 	function testProductNameIsCorrect() {
 		$request = $this->createRequest("submarino");
-
 		$this->assertEquals('111970051', $request->productId);
 		
 		$request = $this->createRequest("americanas");
-		
 		$this->assertEquals('111970051', $request->productId);
 		
 		$request = $this->createRequest("saraiva");
-		
 		$this->assertEquals('4710182', $request->productId);
+		
+		$request = $this->createRequest("netshoes");
+		$this->assertEquals('094-0460-014-03', $request->productId);
 	}
 	
 	/**
@@ -101,6 +102,10 @@ class ProductInfoTest extends PHPUnit_Framework_TestCase {
 		$request = $this->createRequest("saraiva");
 		$productName = 'Game Of Thrones - 1ª e 2ª Temporada Completa - 10 DVDs';
 		$this->assertEquals( $productName, $request->productName );
+		
+		$request = $this->createRequest("netshoes");
+		$productName = 'Camiseta Billabong Crossroads';
+		$this->assertEquals( $productName, $request->productName );
 	}
 	
 	/**
@@ -115,6 +120,9 @@ class ProductInfoTest extends PHPUnit_Framework_TestCase {
 		
 		$request = $this->createRequest("saraiva");
 		$this->assertEquals('199,90',$request->productPrice);
+		
+		$request = $this->createRequest("netshoes");
+		$this->assertEquals('79,90',$request->productPrice);
 	}
 	
 	/**
@@ -161,6 +169,17 @@ class ProductInfoTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( $info->offsetExists('Largura') );
 		
 		$this->assertEquals( 'SIM', $info->offsetGet('Colorido') );
+		
+		/** NETSHOES **/
+		$request = $this->createRequest("netshoes");
+		
+		$info = $request->productTable;
+			
+		$this->assertTrue( $info->offsetExists('Composição') );
+		$this->assertTrue( $info->offsetExists('Garantia do fabricante') );
+		$this->assertTrue( $info->offsetExists('Origem') );
+		
+		$this->assertEquals( '50x88 cm (LxA).', $info->offsetGet('GG') );
 	}
 	
 	/**
@@ -189,6 +208,14 @@ class ProductInfoTest extends PHPUnit_Framework_TestCase {
 				'http://images.livrariasaraiva.com.br/imagem/imagem.dll?pro_id=4710182&L=500&A=-1&PIM_Id=',
 				$request->productPicture
 		);
+		
+		unset($request);
+		
+		$request = $this->createRequest("netshoes");
+		$this->assertEquals(
+				'http://nsh.br.netshoes.net/Produtos/06/094-0460-006/094-0460-006_janela.jpg',
+				$request->productPicture
+		);
 	}
 	
 	private function createRequest($site) {
@@ -199,6 +226,8 @@ class ProductInfoTest extends PHPUnit_Framework_TestCase {
 				return new AmericanasProductInfo( '111970051' );
 			case "saraiva":
 				return new SaraivaProductInfo( '4710182' );
+			case "netshoes":
+				return new NetShoesProductInfo( '094-0460-014-03' );
 		}
 	}
 }
