@@ -1,6 +1,6 @@
 <?php
 /*******************************************************************************
-* Copyright 2012 Evaldo Barbosa
+* Copyright 2013 Evaldo Barbosa
 *
 * This file is part of Product Puller.
 *
