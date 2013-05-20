@@ -36,7 +36,7 @@ abstract class AbstractProductInfo {
 	protected $descTable;
 	protected $allInformation;
 	
-	function __construct($pid,$utf8=false) {
+	function __construct($pid) {
 		$this->pid = $pid;
 		$this->url = sprintf(
 			$this->urlMask(),
