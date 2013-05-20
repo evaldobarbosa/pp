@@ -22,6 +22,7 @@
 
 use Puller\Target\SubmarinoProductInfo;
 use Puller\Target\AmericanasProductInfo;
+use Puller\Target\SaraivaProductInfo;
 /**
  * @group Info
  * @author evaldo
@@ -53,6 +54,19 @@ class ProductInfoTest extends PHPUnit_Framework_TestCase {
 		unset( $request );
 		$request = $this->createRequest("americanas");
 		$this->assertTrue( file_exists($filename) );
+		
+		/** SARAIVA **/
+		$request = $this->createRequest("saraiva");
+		$hash = md5($request->productURL);
+		$filename = "/tmp/SaraivaProductInfo-{$hash}.html";
+		
+		unlink( $filename );
+		
+		$this->assertFalse( file_exists($filename) );
+		
+		unset( $request );
+		$request = $this->createRequest("saraiva");
+		$this->assertTrue( file_exists($filename) );
 	}
 	
 	/**
@@ -66,6 +80,10 @@ class ProductInfoTest extends PHPUnit_Framework_TestCase {
 		$request = $this->createRequest("americanas");
 		
 		$this->assertEquals('111970051', $request->productId);
+		
+		$request = $this->createRequest("saraiva");
+		
+		$this->assertEquals('4710182', $request->productId);
 	}
 	
 	/**
@@ -73,15 +91,15 @@ class ProductInfoTest extends PHPUnit_Framework_TestCase {
 	 */
 	function testIf2ProductNameIsCorrect() {
 		$request = $this->createRequest("submarino");
-		
 		$productName = 'Smartphone Motorola RAZR i, GSM, Preto, Processador Intel Inside® 2GHz, Tela AMOLED Advanced 4.3", Touchscreen, Android 4.0, Câmera de 8MP , Câmera Frontal VGA, Gravação Full HD, 3G, Wi-Fi, Bluetooth, GPS, NFC, Memória interna de 8GB';
-		
 		$this->assertEquals( $productName, $request->productName );
 		
 		$request = $this->createRequest("americanas");
-		
 		$productName = 'Smartphone Motorola RAZR i, GSM, Preto, Processador Intel Inside® 2GHz, Tela AMOLED Advanced 4.3", Touchscreen, Android 4.0, Câmera de 8MP , Câmera Frontal VGA, Gravação Full HD, 3G, Wi-Fi, Bluetooth, GPS, NFC, Memória interna de 8GB';
+		$this->assertEquals( $productName, $request->productName );
 		
+		$request = $this->createRequest("saraiva");
+		$productName = 'Game Of Thrones - 1ª e 2ª Temporada Completa - 10 DVDs';
 		$this->assertEquals( $productName, $request->productName );
 	}
 	
@@ -90,12 +108,13 @@ class ProductInfoTest extends PHPUnit_Framework_TestCase {
 	 */
 	function testIf2ProductPriceIsCorrect() {
 		$request = $this->createRequest("submarino");
-		
 		$this->assertEquals('999,00',$request->productPrice);
 		
 		$request = $this->createRequest("americanas");
-		
 		$this->assertEquals('999,00',$request->productPrice);
+		
+		$request = $this->createRequest("saraiva");
+		$this->assertEquals('199,90',$request->productPrice);
 	}
 	
 	/**
@@ -103,9 +122,7 @@ class ProductInfoTest extends PHPUnit_Framework_TestCase {
 	 */
 	function testIf200FirstCharsAreCorrect() {
 		$request = $this->createRequest("submarino");
-		
 		$first200Chr = 'Smartphone Motorola RAZR i, GSM, Preto, Processador Intel Inside® 2GHz, Tela AMOLED Advanced 4.3", Touchscreen, Android 4.0, Câmera de 8MP , Câmera Frontal VGA, Gravação Full HD, 3G, Wi-Fi, Bluetooth';
-		
 		$this->assertEquals( $first200Chr, substr($request->productInfo, 0, strlen($first200Chr)) );
 	}
 	
@@ -123,6 +140,7 @@ class ProductInfoTest extends PHPUnit_Framework_TestCase {
 		
 		$this->assertEquals( '4.3"', $info->offsetGet('Tamanho do Display') );
 		
+		/** AMERICANAS **/
 		$request = $this->createRequest("americanas");
 		
 		$info = $request->productTable;
@@ -132,6 +150,17 @@ class ProductInfoTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( $info->offsetExists('Dual Core') );
 		
 		$this->assertEquals( '4.3"', $info->offsetGet('Tamanho do Display') );
+		
+		/** SARAIVA **/
+		$request = $this->createRequest("saraiva");
+		
+		$info = $request->productTable;
+		
+		$this->assertTrue( $info->offsetExists('Cód. Barras') );
+		$this->assertTrue( $info->offsetExists('Altura') );
+		$this->assertTrue( $info->offsetExists('Largura') );
+		
+		$this->assertEquals( 'SIM', $info->offsetGet('Colorido') );
 	}
 	
 	/**
@@ -148,9 +177,16 @@ class ProductInfoTest extends PHPUnit_Framework_TestCase {
 		unset($request);
 		
 		$request = $this->createRequest("americanas");
-		
 		$this->assertEquals(
 				'http://img.americanas.com.br/produtos/01/00/item/111970/0/111970051G1.jpg',
+				$request->productPicture
+		);
+		
+		unset($request);
+		
+		$request = $this->createRequest("saraiva");
+		$this->assertEquals(
+				'http://images.livrariasaraiva.com.br/imagem/imagem.dll?pro_id=4710182&L=500&A=-1&PIM_Id=',
 				$request->productPicture
 		);
 	}
@@ -161,6 +197,8 @@ class ProductInfoTest extends PHPUnit_Framework_TestCase {
 				return new SubmarinoProductInfo( '111970051' );
 			case "americanas":
 				return new AmericanasProductInfo( '111970051' );
+			case "saraiva":
+				return new SaraivaProductInfo( '4710182' );
 		}
 	}
 }
