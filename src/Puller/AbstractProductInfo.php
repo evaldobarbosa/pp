@@ -27,6 +27,7 @@ use Infra\Utils\RestRequest;
 abstract class AbstractProductInfo {
 	private $cacheFileName;
 	private $url;
+	protected $pid;
 	protected $id;
 	protected $name;
 	protected $price;
@@ -35,7 +36,8 @@ abstract class AbstractProductInfo {
 	protected $descTable;
 	protected $allInformation;
 	
-	function __construct($pid) {
+	function __construct($pid,$utf8=false) {
+		$this->pid = $pid;
 		$this->url = sprintf(
 			$this->urlMask(),
 			$pid
@@ -51,6 +53,12 @@ abstract class AbstractProductInfo {
 		} else {		
 			$this->getProductFromUrl("{$this->url}");
 		}
+		
+		$this->parse();
+	}
+	
+	function refreshCacheFile() {
+		$this->getProductFromUrl("{$this->url}");
 		
 		$this->parse();
 	}
