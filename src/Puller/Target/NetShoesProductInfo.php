@@ -25,7 +25,7 @@ namespace Puller\Target;
 use Puller\AbstractProductInfo;
 
 class NetShoesProductInfo extends AbstractProductInfo {
-  protected function urlMask() {
+	protected function urlMask() {
 		return 'http://www.netshoes.com.br/produto/%s';
 	}
 	
@@ -46,9 +46,6 @@ class NetShoesProductInfo extends AbstractProductInfo {
 	protected function getPrice() {
 		$ret = $this->allInformation;
 		
-		$ret = str_replace("\t",'',$ret);
-		file_put_contents("/tmp/test-price.txt",$ret);
-
 		$regex = '#<p class="txtPromo">(.*?)</p>#is';
 		$matches = array();
 		preg_match_all($regex, $ret, $matches, PREG_PATTERN_ORDER);
