@@ -24,6 +24,7 @@ use Puller\Target\SubmarinoProductInfo;
 use Puller\Target\AmericanasProductInfo;
 use Puller\Target\SaraivaProductInfo;
 use Puller\Target\NetShoesProductInfo;
+use Puller\Target\PontoFrioProductInfo;
 /**
  * @group Info
  * @author evaldo
@@ -68,6 +69,19 @@ class ProductInfoTest extends PHPUnit_Framework_TestCase {
 		unset( $request );
 		$request = $this->createRequest("saraiva");
 		$this->assertTrue( file_exists($filename) );
+		
+		/** PONTO FRIO **/
+		$request = $this->createRequest("pontofrio");
+		$hash = md5($request->productURL);
+		$filename = "/tmp/PontoFrioProductInfo-{$hash}.html";
+		
+		unlink( $filename );
+		
+		$this->assertFalse( file_exists($filename) );
+		
+		unset( $request );
+		$request = $this->createRequest("pontofrio");
+		$this->assertTrue( file_exists($filename) );
 	}
 	
 	/**
@@ -85,6 +99,9 @@ class ProductInfoTest extends PHPUnit_Framework_TestCase {
 		
 		$request = $this->createRequest("netshoes");
 		$this->assertEquals('094-0460-014-03', $request->productId);
+		
+		$request = $this->createRequest("pontofrio");
+		$this->assertEquals('1748861', $request->productId);
 	}
 	
 	/**
@@ -106,6 +123,10 @@ class ProductInfoTest extends PHPUnit_Framework_TestCase {
 		$request = $this->createRequest("netshoes");
 		$productName = 'Camiseta Billabong Crossroads';
 		$this->assertEquals( $productName, $request->productName );
+		
+		$request = $this->createRequest("pontofrio");
+		$productName = 'Celular Desbloqueado Motorola RAZR™ i Preto com Processador Intel® de 2 GHz, Tela de 4.3’’, Android 4.0, Câmera 8MP, Wi-Fi, 3G, NFC, GPS e Bluetooth';
+		$this->assertEquals( $productName, $request->productName );
 	}
 	
 	/**
@@ -119,10 +140,13 @@ class ProductInfoTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals('999,00',$request->productPrice);
 		
 		$request = $this->createRequest("saraiva");
-		$this->assertEquals('199,90',$request->productPrice);
+		$this->assertEquals('169,90',$request->productPrice);
 		
 		$request = $this->createRequest("netshoes");
 		$this->assertEquals('79,90',$request->productPrice);
+		
+		$request = $this->createRequest("pontofrio");
+		$this->assertEquals('999,00',$request->productPrice);
 	}
 	
 	/**
@@ -216,6 +240,14 @@ class ProductInfoTest extends PHPUnit_Framework_TestCase {
 				'http://nsh.br.netshoes.net/Produtos/06/094-0460-006/094-0460-006_janela.jpg',
 				$request->productPicture
 		);
+		
+		unset($request);
+		
+		$request = $this->createRequest("pontofrio");
+		$this->assertEquals(
+				'http://www.pontofrio-imagens.com.br/Control/ArquivoExibir.aspx?IdArquivo=6549950',
+				$request->productPicture
+		);
 	}
 	
 	private function createRequest($site) {
@@ -228,6 +260,8 @@ class ProductInfoTest extends PHPUnit_Framework_TestCase {
 				return new SaraivaProductInfo( '4710182' );
 			case "netshoes":
 				return new NetShoesProductInfo( '094-0460-014-03' );
+			case "pontofrio":
+				return new PontoFrioProductInfo( 'TelefoneseCelulares/Smartphones/Celular-Desbloqueado-Motorola-RAZR-i-Preto-com-Processador-Intel-de-2-GHz-Tela-de-4-3’’-Android-4-0-Camera-8MP-Wi-Fi-3G-NFC-GPS-e-Bluetooth-1748861.html' );
 		}
 	}
 }
