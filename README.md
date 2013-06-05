@@ -7,6 +7,8 @@ Simple to use, PP is the way to collect data about a product in brazilian e-comm
 
 See the code of tests.
 
+Note: This class is in innovation awards from phpclasses.org! See http://www.phpclasses.org/package/8077-PHP-Scrape-product-data-pages-from-e-commerce-sites.html
+
 To run the test:
 
 $ bin/phpunit -c tests/phpunit.xml --group=Info
