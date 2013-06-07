@@ -35,3 +35,5 @@ print_r( $p->productTable );
 
 This software now is under LPGLv3. Se this:
 http://www.gnu.org/copyleft/lesser.txt
+
+Puller (pp)p ackage was nominee to innovation awards of the PHPClasses.org
