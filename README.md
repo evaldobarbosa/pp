@@ -37,5 +37,4 @@ This software now is under LPGLv3. Se this:
 http://www.gnu.org/copyleft/lesser.txt
 
 Puller (pp) package was nominee to innovation awards of the PHPClasses.org
-http://files.phpclasses.org/graphics/phpclasses/innovation-award-logo.png
 http://www.phpclasses.org/package/8077-PHP-Scrape-product-data-pages-from-e-commerce-sites.html
