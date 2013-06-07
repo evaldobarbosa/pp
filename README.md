@@ -33,8 +33,11 @@ echo $p->productId, "\n", $p->productName, "\n";
 print_r( $p->productTable );
 </pre>
 
-This software now is under LPGLv3. Se this:
-http://www.gnu.org/copyleft/lesser.txt
+## Important
 
-Puller (pp) package was nominee to innovation awards of the PHPClasses.org
-http://www.phpclasses.org/package/8077-PHP-Scrape-product-data-pages-from-e-commerce-sites.html
+> *This software now is under LPGLv3. Se this:*<br/>
+> *http://www.gnu.org/copyleft/lesser.txt*
+
+> <img src="http://files.phpclasses.org/graphics/phpclasses/innovation-award-logo.png"/><br/>
+> Puller (pp) package was nominee to innovation awards of the PHPClasses.org<br/>
+> http://www.phpclasses.org/package/8077-PHP-Scrape-product-data-pages-from-e-commerce-sites.html
