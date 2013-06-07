@@ -32,3 +32,6 @@ echo $p->productId, "\n", $p->productName, "\n";
 
 print_r( $p->productTable );
 </pre>
+
+This software now is under LPGLv3. Se this:
+http://www.gnu.org/copyleft/lesser.txt
