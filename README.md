@@ -15,7 +15,7 @@ $ bin/phpunit -c tests/phpunit.xml --group=Info
 
 Example:
 
-<pre>
+```php
 <?
 /**
 * Getting information from ID 111970051
@@ -27,11 +27,18 @@ use Puller\Target\SubmarinoProductInfo;
 $productid = 111970051;
 
 $p = new SubmarinoProductInfo( $productid );
-
 echo $p->productId, "\n", $p->productName, "\n";
+print_r( $p->productTable );
 
+$p = new NetShoesProductInfo( '094-0460-014-03' );
+echo $p->productId, "\n", $p->productName, "\n";
+print_r( $p->productTable );
+
+$p = new PontoFrioProductInfo( 'TelefoneseCelulares/Smartphones/Celular-Desbloqueado-Motorola-RAZR-i-Preto-com-Processador-Intel-de-2-GHz-Tela-de-4-3’’-Android-4-0-Camera-8MP-Wi-Fi-3G-NFC-GPS-e-Bluetooth-1748861.html' );
+echo $p->productId, "\n", $p->productName, "\n";
 print_r( $p->productTable );
 </pre>
+```
 
 ## Important
 
