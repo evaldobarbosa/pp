@@ -18,7 +18,7 @@ Example:
 ```php
 <?
 /**
-* Getting information from ID 111970051
+* Getting information from products
 */
 
 use Puller\Target\SubmarinoProductInfo;
