@@ -24,6 +24,7 @@ use Puller\Target\AmericanasProductInfo;
 use Puller\Target\SaraivaProductInfo;
 use Puller\Target\NetShoesProductInfo;
 use Puller\Target\PontoFrioProductInfo;
+use Puller\Target\RicardoEletroProductInfo;
 /**
  * @group Info
  * @author evaldo
@@ -81,6 +82,19 @@ class ProductInfoTest extends PHPUnit_Framework_TestCase {
 		unset( $request );
 		$request = $this->createRequest("pontofrio");
 		$this->assertTrue( file_exists($filename) );
+		
+		/** RICARDO ELETRO **/
+		$request = $this->createRequest("ricardoeletro");
+		$hash = md5($request->productURL);
+		$filename = "/tmp/RicardoEletroProductInfo-{$hash}.html";
+		
+		unlink( $filename );
+		
+		$this->assertFalse( file_exists($filename) );
+		
+		unset( $request );
+		$request = $this->createRequest("ricardoeletro");
+		$this->assertTrue( file_exists($filename) );
 	}
 	
 	/**
@@ -101,6 +115,9 @@ class ProductInfoTest extends PHPUnit_Framework_TestCase {
 		
 		$request = $this->createRequest("pontofrio");
 		$this->assertEquals('1748861', $request->productId);
+		
+		$request = $this->createRequest("ricardoeletro");
+		$this->assertEquals('326629', $request->productId);
 	}
 	
 	/**
@@ -126,6 +143,10 @@ class ProductInfoTest extends PHPUnit_Framework_TestCase {
 		$request = $this->createRequest("pontofrio");
 		$productName = 'Celular Desbloqueado Motorola RAZR™ i Preto com Processador Intel® de 2 GHz, Tela de 4.3’’, Android 4.0, Câmera 8MP, Wi-Fi, 3G, NFC, GPS e Bluetooth';
 		$this->assertEquals( $productName, $request->productName );
+		
+		$request = $this->createRequest("ricardoeletro");
+		$productName = 'Celular Desbloqueado LG Optimus L5 II Dual E455 Preto - Dual Chip, Android 4.1, Câmera 5 MP, Wi-Fi, MP3, GPS, Bluetooth e Rádio FM';
+		$this->assertEquals( $productName, $request->productName );
 	}
 	
 	/**
@@ -146,6 +167,9 @@ class ProductInfoTest extends PHPUnit_Framework_TestCase {
 		
 		$request = $this->createRequest("pontofrio");
 		$this->assertEquals('999,00',$request->productPrice);
+		
+		$request = $this->createRequest("ricardoeletro");
+		$this->assertEquals('839,00',$request->productPrice);
 	}
 	
 	/**
@@ -203,6 +227,17 @@ class ProductInfoTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( $info->offsetExists('Origem') );
 		
 		$this->assertEquals( '50x88 cm (LxA).', $info->offsetGet('GG') );
+		
+		/** RICARDO ELETRO **/
+		$request = $this->createRequest("ricardoeletro");
+		
+		$info = $request->productTable;
+		
+		$this->assertTrue( $info->offsetExists('Cor do Produto') );
+		$this->assertTrue( $info->offsetExists('Modelo') );
+		$this->assertTrue( $info->offsetExists('Flash Integrado') );
+		
+		$this->assertEquals( 'Sim', $info->offsetGet('EDGE') );
 	}
 	
 	/**
@@ -236,7 +271,7 @@ class ProductInfoTest extends PHPUnit_Framework_TestCase {
 		
 		$request = $this->createRequest("netshoes");
 		$this->assertEquals(
-				'http://nsh.br.netshoes.net/Produtos/06/094-0460-006/094-0460-006_janela.jpg',
+				'http://nsh2.br.netshoes.net/Produtos/06/094-0460-006/094-0460-006_janela.jpg',
 				$request->productPicture
 		);
 		
@@ -245,6 +280,12 @@ class ProductInfoTest extends PHPUnit_Framework_TestCase {
 		$request = $this->createRequest("pontofrio");
 		$this->assertEquals(
 				'http://www.pontofrio-imagens.com.br/Control/ArquivoExibir.aspx?IdArquivo=6549950',
+				$request->productPicture
+		);
+		
+		$request = $this->createRequest("ricardoeletro");
+		$this->assertEquals(
+				'http://images.maquinadevendas.com.br/370x370/produto/326629_2004826_20130416164443.jpg',
 				$request->productPicture
 		);
 	}
@@ -261,6 +302,8 @@ class ProductInfoTest extends PHPUnit_Framework_TestCase {
 				return new NetShoesProductInfo( '094-0460-014-03' );
 			case "pontofrio":
 				return new PontoFrioProductInfo( 'TelefoneseCelulares/Smartphones/Celular-Desbloqueado-Motorola-RAZR-i-Preto-com-Processador-Intel-de-2-GHz-Tela-de-4-3’’-Android-4-0-Camera-8MP-Wi-Fi-3G-NFC-GPS-e-Bluetooth-1748861.html' );
+			case "ricardoeletro":
+				return new RicardoEletroProductInfo( 'Celular-Desbloqueado-LG-Optimus-L5-II-Dual-E455-Preto-Dual-Chip-Android-41-Camera-5-MP-Wi-Fi-MP3-GPS-Bluetooth-e-Radio-FM/44-491-497-296172' );
 		}
 	}
 }
