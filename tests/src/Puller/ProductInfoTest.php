@@ -32,7 +32,7 @@ use Puller\Target\MagazineLuizaProductInfo;
  *
  */
 class ProductInfoTest extends PHPUnit_Framework_TestCase {
-  function testIfRequestCanCreateCacheFile() {
+	function testIfRequestCanCreateCacheFile() {
 		$request = $this->createRequest("submarino");
 		$hash = md5($request->productURL);
 		$filename = "/tmp/SubmarinoProductInfo-{$hash}.html";
