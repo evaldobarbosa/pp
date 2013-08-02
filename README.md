@@ -42,6 +42,6 @@ print_r( $p->productTable );
 
 > *This software now is under LPGLv3. Se this:*<br/>
 > *http://www.gnu.org/copyleft/lesser.txt*
-
+> Winner - June 2013
 > <img src="http://www.phpclasses.org/award/innovation/winner.png"/><br/>
 > http://www.phpclasses.org/package/8077-PHP-Scrape-product-data-pages-from-e-commerce-sites.html
